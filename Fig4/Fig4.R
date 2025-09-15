@@ -1,172 +1,178 @@
 ##Fig4
-#Fig4A
-df <- read.table("huifayou_Fig4A.txt", header = TRUE, sep = "\t", stringsAsFactors = FALSE)
-df[, -1] <- lapply(df[, -1], as.numeric)
-# 按组计算平均值
 library(dplyr)
-group_mean <- df %>%
-  group_by(Group) %>%
-  summarise(across(where(is.numeric), ~ mean(.x, na.rm = TRUE)))
-# 如果需要矩阵形式
-group_mean_mat <- as.data.frame(group_mean)
-rownames(group_mean_mat) <- group_mean_mat$Group
-group_mean_mat <- group_mean_mat[, -1]
-# 输出结果
-huifay<-group_mean_mat
+library(ggplot2)
 
-df <- read.table("turang_Fig4A.txt", header = TRUE, sep = "\t", stringsAsFactors = FALSE)
+# 读取数据
+df <- read.table("root_Fig4.txt", header = TRUE, sep = "\t", stringsAsFactors = FALSE)
+
+# 按输入顺序设置 x 轴顺序
+df$group <- factor(df$group, levels = unique(df$group))
+
+# 配对列表
+pairs <- data.frame(
+  group1 = c("TSB_CK1", "TSB_CK1","TSB_CK1", "PDB_CK", "TSA_CK", "TSA_CK", "TSA_CK", "TSA_CK", "TSA_CK",
+             "TTC_CK", "TTC_CK", "YMA_CK", "YMA_CK"),
+  group2 = c("S.chromofuscus", "S. cyaneochromogenes","S. mayteni", "Paenibacillus alvei",
+             "TSA_Re359", "TSA_Re528", "TSA_Re1030", "TSA_Sa564", "TSA_Sa789",
+             "TTC_Rs3041", "TTC_Rs7061", "YMA_By037", "YMA_By261")
+)
+
+# 计算均值和标准差（用于显著性标注高度）
+df_stat <- df %>%
+  group_by(group, color) %>%
+  summarise(
+    mean_val = mean(Root, na.rm = TRUE),
+    sd_val = sd(Root, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+# 显著性检验
+test_results <- pairs %>%
+  rowwise() %>%
+  mutate(
+    p_value = t.test(
+      Root ~ group,
+      data = df %>% filter(group %in% c(group1, group2))
+    )$p.value
+  ) %>%
+  mutate(
+    signif_label = case_when(
+      p_value <= 0.001 ~ "***",
+      p_value <= 0.01 ~ "**",
+      p_value <= 0.05 ~ "*",
+      TRUE ~ "ns"
+    )
+  )
+
+# 合并显著性信息到统计数据
+df_stat <- df_stat %>%
+  left_join(test_results %>% select(group2, signif_label),
+            by = c("group" = "group2"))
+
+# 绘图 —— 使用原始数据 df 画箱线 + 散点
+p2 <- ggplot(df, aes(x = group, y = Root, fill = factor(color))) +
+  geom_boxplot(width = 0.5, outlier.shape = NA, color = "black") +   # 箱线图
+  geom_jitter(aes(color = factor(color)), width = 0.2, size = 2, alpha = 0.7) +  # 散点
+  # 添加显著性标注
+  geom_text(data = df_stat,
+            aes(x = group, y = mean_val + sd_val + 0.05, label = signif_label),
+            inherit.aes = FALSE, vjust = 0) +
+  scale_fill_brewer(palette = "Paired") +
+  scale_color_brewer(palette = "Paired") +
+  theme_bw(base_size = 13) +
+  labs(x = NULL, y = NULL, title = NULL) +
+  theme(
+    panel.grid = element_blank(),
+    axis.text.x = element_blank(),
+    legend.position = "none"
+  )
+
+library(dplyr)
+library(ggplot2)
+
+# 读取数据
+df <- read.table("plant_Fig4.txt", header = TRUE, sep = "\t", stringsAsFactors = FALSE)
+head(df)
+# 按输入顺序设置 x 轴顺序
+df$group <- factor(df$group, levels = unique(df$group))
+
+# 配对列表
+pairs <- data.frame(
+  group1 = c("TSB_CK1", "TSB_CK1","TSB_CK1", "PDB_CK", "TSA_CK", "TSA_CK", "TSA_CK", "TSA_CK", "TSA_CK",
+             "TTC_CK", "TTC_CK", "YMA_CK", "YMA_CK"),
+  group2 = c("S.chromofuscus", "S. cyaneochromogenes","S. mayteni", "Paenibacillus alvei",
+             "TSA_Re359", "TSA_Re528", "TSA_Re1030", "TSA_Sa564", "TSA_Sa789",
+             "TTC_Rs3041", "TTC_Rs7061", "YMA_By037", "YMA_By261")
+)
+
+# 显著性检验
+test_results <- pairs %>%
+  rowwise() %>%
+  mutate(
+    p_value = t.test(
+      plant ~ group,
+      data = df %>% filter(group %in% c(group1, group2))
+    )$p.value
+  ) %>%
+  mutate(
+    signif_label = case_when(
+      p_value <= 0.001 ~ "***",
+      p_value <= 0.01 ~ "**",
+      p_value <= 0.05 ~ "*",
+      TRUE ~ "ns"
+    )
+  )
+
+# 创建箱线图 + 散点图
+p3 <- ggplot(df, aes(x = group, y = plant, fill = factor(color))) +
+  geom_boxplot(width = 0.5, outlier.shape = NA, color = "black") +  # 箱线图
+  geom_jitter(aes(color = factor(color)), width = 0.2, size = 2, alpha = 0.7) +  # 散点
+  # 添加显著性标注
+  geom_text(data = df_stat,
+            aes(x = group, y = mean_val + sd_val + 0.05, label = signif_label),
+            inherit.aes = FALSE, vjust = 0) +
+  scale_fill_brewer(palette = "Paired") +
+  scale_color_brewer(palette = "Paired") +
+  theme_bw(base_size = 13) +
+  labs(x = NULL, y = NULL, title = NULL) +
+  theme(
+    panel.grid = element_blank(),
+    #axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.position = "none"
+  )
 library(dplyr)
 library(tidyr)
+df <- read.table("corebactest_Fig4.txt", header = TRUE, sep = "\t", stringsAsFactors = FALSE)
+df_wide <- df %>%
+  select(sample, value, chemo, group, color) %>%
+  pivot_wider(names_from = chemo, values_from = value)
+# 计算比值
+df_wide <- df_wide %>%
+  mutate(ratio = (Atractylon + Atractylodin) / (`β_Eudesmol` + Hineson))
+df_wide$group <- factor(df_wide$group, levels = unique(df_wide$group))
+df_stat <- df_wide %>%
+  group_by(group, color) %>%
+  summarise(
+    mean_ratio = mean(ratio, na.rm = TRUE),
+    sd_ratio = sd(ratio, na.rm = TRUE),
+    .groups = "drop"
+  )
 library(ggplot2)
-# 去掉含 NA 的行
-df <- na.omit(merge)
-# 指定 x 和 y 列
-x_vars <- c("Hinesol", "β.Eudesmol", "Atractylon", "Atractylodin", "aa_hb")
-y_vars <- setdiff(colnames(df), c("Row.names", x_vars))
-# 初始化结果表
-cor_res <- expand.grid(Xvar = x_vars, Yvar = y_vars, stringsAsFactors = FALSE)
-cor_res$rho <- NA
-cor_res$pvalue <- NA
-# 循环做 Spearman 相关
-for (i in seq_len(nrow(cor_res))) {
-  x <- df[[cor_res$Xvar[i]]]
-  y <- df[[cor_res$Yvar[i]]]
-  if (var(x, na.rm = TRUE) == 0 || var(y, na.rm = TRUE) == 0) next
-  test <- suppressWarnings(cor.test(x, y, method = "spearman"))
-  cor_res$rho[i] <- test$estimate
-  cor_res$pvalue[i] <- test$p.value
-}
+library(RColorBrewer)
 
-# FDR 校正
-cor_res$padj <- p.adjust(cor_res$pvalue, method = "fdr")
+# 先把 color 列转换为因子，保证 Paired 调色板映射
+df_stat$color <- factor(df_stat$color, levels = unique(df_stat$color))
+df_wide$color <- factor(df_wide$color, levels = levels(df_stat$color))
 
-# 标注显著性，只保留 padj < 0.05 的
-cor_res$sig <- ifelse(cor_res$pvalue < 0.001, "***",
-                      ifelse(cor_res$pvalue < 0.01, "**",
-                             ifelse(cor_res$pvalue < 0.05, "*", "")))
-
-# 作图
-ggplot(cor_res, aes(x = Xvar, y = Yvar, fill = rho, size = abs(rho))) +
-  geom_point(shape = 21, colour = "black") +
-  scale_fill_gradient2(low = "#2166AC", mid = "white", high = "#B2182B", midpoint = 0) +
-  scale_size(range = c(3, 8)) +
-  theme_bw(base_size = 14) +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  labs(fill = "Spearman\nrho", size = "|rho|", x = "", y = "")
-
-#Fig4B
-library(vegan)
-library(ggplot2)
+p1<-ggplot(df_stat, aes(x = group, y = mean_ratio, fill = color)) +
+  # 每个样本的小点（透明）
+  geom_point(data = df_wide, aes(x = group, y = ratio, fill = color),
+             size = 2, shape = 21, alpha = 0.8, color = "black",
+             inherit.aes = FALSE) +
+  # 大点（均值）
+  geom_point(shape = 21, size = 4, color = "black") +
+  # 误差条
+  geom_errorbar(aes(ymin = mean_ratio - sd_ratio, ymax = mean_ratio + sd_ratio), width = 0.2) +
+  # 数值标签（在误差条上方，旋转60度）
+  geom_text(aes(
+    y = mean_ratio + sd_ratio + 5,# 在误差条顶端再往上加5个单位
+    label = round(mean_ratio, 2)
+  ),
+  angle = 60, vjust = 0.5,hjust=0,size = 3, color = "black"
+  ) +
+  # 使用 Paired 调色板
+  scale_fill_brewer(palette = "Paired") +
+  labs(
+    x = NULL,
+    y = NULL,
+    title = "Ratio (Atractylon+Atractylodin)/(β_Eudesmol+Hineson)"
+  ) +
+  coord_cartesian(ylim = c(-2, 200)) +
+  theme_bw(base_size = 13) +
+  theme(
+    panel.grid = element_blank(), # 去掉网格线
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.position = "none"
+  )
 library(patchwork)
-library(ggrepel)
-
-# 修改后的CCA绘图函数（仅显示数值型变量）
-create_cca_plot <- function(abundance, metadata, title = "") {
-  # 转置数据并匹配样本
-  abundance_t <- t(abundance)
-  common_samples <- intersect(rownames(abundance_t), rownames(metadata))
-  abundance_t <- abundance_t[common_samples, ]
-  metadata <- metadata[common_samples, ]
-  
-  # 排除非环境变量列（保留所有数值型变量）
-  env_vars <- setdiff(colnames(metadata), c("Sample", "Genotype", "Chemotype")) 
-  
-  # 执行CCA分析
-  formula <- as.formula(paste("abundance_t ~", paste(env_vars, collapse = "+")))
-  ord <- cca(formula, data = metadata)
-  
-  # 提取样本点坐标
-  sites <- scores(ord, display = "sites", choices = 1:2)
-  sites_df <- as.data.frame(sites)
-  colnames(sites_df) <- c("CCA1", "CCA2")
-  sites_df$Chemotype <- metadata$Chemotype
-  sites_df$Sample <- rownames(sites_df)
-  
-  # 提取环境变量箭头（仅数值型变量）
-  env_arrows <- scores(ord, display = "bp", choices = 1:2)
-  env_df <- if(!is.null(env_arrows)) {
-    data.frame(
-      CCA1 = env_arrows[,1] * 5,  # 调整箭头缩放比例
-      CCA2 = env_arrows[,2] *5,
-      Var = rownames(env_arrows)
-    )
-  } else {
-    data.frame(CCA1 = numeric(0), CCA2 = numeric(0), Var = character(0))
-  }
-  
-  # 计算解释的方差
-  eig <- ord$CCA$eig
-  variance1 <- ifelse(length(eig)>0, round(eig[1]/sum(eig)*100, 1), 0)
-  variance2 <- ifelse(length(eig)>1, round(eig[2]/sum(eig)*100, 1), 0)
-  
-  # 创建基础绘图（使用theme_bw，隐藏网格线）
-  p <- ggplot() +
-    geom_vline(xintercept = 0,linetype = "dashed", color = "gray60", alpha = 0.6) +
-    geom_vline(yintercept = 0,linetype = "dashed", color = "gray60", alpha = 0.6) +
-    geom_point(data = sites_df, 
-               aes(x = CCA1, y = CCA2, color = Chemotype), 
-               size = 2, alpha = 0.8) +
-    scale_color_manual(values = c("HBA" = "#1B9E77", "MSA" = "#D95F02")) +
-    labs(title = paste0(title, " (CCA)"),
-         x = paste0("CCA1 (", variance1, "%)"),
-         y = paste0("CCA2 (", variance2, "%)")) +
-    theme_bw() +
-    theme(
-      panel.grid = element_blank(),
-      legend.position = "right",
-      plot.title = element_text(size = 11, face = "bold")
-    )
-  
-  # 添加环境变量箭头（数值型）
-  if(nrow(env_df) > 0){
-    p <- p + 
-      geom_segment(
-        data = env_df,
-        aes(x = 0, y = 0, xend = CCA1, yend = CCA2),
-        arrow = arrow(length = unit(0.15, "cm")),
-        color = "black", alpha = 0.8, linewidth = 0.6
-      ) +
-      geom_text_repel(
-        data = env_df,
-        aes(x = CCA1, y = CCA2, label = Var),
-        color = "black", size = 2,
-        min.segment.length = 0.3,
-        box.padding = 0.4
-      )
-  }
-  
-  # 添加总解释率
-  p <- p + 
-    annotate("text", x = Inf, y = Inf,
-             label = paste("Total variance explained:", 
-                           round(sum(ord$CCA$eig)/ord$tot.chi*100, 1), "%"),
-             hjust = 1.05, vjust = 1.2, size = 3, color = "gray30")
-  
-  return(p)
-}
-
-# 数据读取
-bac_gennei <- read.table("bac_gennei.tsv", header = TRUE, row.names = 1, sep = "\t")
-bac_genjie <- read.table("bac_genjie.tsv", header = TRUE, row.names = 1, sep = "\t")
-fun_gennei <- read.table("fun_gennei.tsv", header = TRUE, row.names = 1, sep = "\t")
-fun_genjie <- read.table("fun_genjie.tsv", header = TRUE, row.names = 1, sep = "\t")
-
-gennei_meta_bac <- read.table("gennei_meta_bac.tsv", header = TRUE, row.names = 1, sep = "\t")
-gennei_meta_fun <- read.table("gennei_meta_fun.tsv", header = TRUE, row.names = 1, sep = "\t")
-genjie_meta_bac <- read.table("genjie_meta_bac.tsv", header = TRUE, row.names = 1, sep = "\t")
-genjie_meta_fun <- read.table("genjie_meta_fun.tsv", header = TRUE, row.names = 1, sep = "\t")
-
-# 创建CCA图（仅显示数值型变量）
-p1 <- create_cca_plot(bac_gennei, gennei_meta_bac, "Bacteria (Gennei)")
-p2 <- create_cca_plot(bac_genjie, genjie_meta_bac, "Bacteria (Genjie)")
-p3 <- create_cca_plot(fun_gennei, gennei_meta_fun, "Fungi (Gennei)")
-p4 <- create_cca_plot(fun_genjie, genjie_meta_fun, "Fungi (Genjie)")
-
-# 组合图形
-combined_plot <- (p1 + p2) / (p3 + p4) +
-  plot_layout(guides = "collect") & 
-  theme(legend.position = "bottom")
-
-# 保存图形（高分辨率）
-ggsave("cca_numeric_vars.png", combined_plot, 
-       width = 12, height = 10, dpi = 300)
+(p3 / p2 / p1) + plot_layout(heights = c(1, 1, 2))

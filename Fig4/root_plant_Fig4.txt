@@ -1,0 +1,108 @@
+sample	Root	group	type	color
+TSB_CK_1	0.9	TSB_CK1	Rhizosphere	1
+TSB_CK_2	0.92	TSB_CK1	Rhizosphere	1
+TSB_CK_3	0.65	TSB_CK1	Rhizosphere	1
+TSB_CK_4	0.75	TSB_CK1	Rhizosphere	1
+TSB_CK_5	0.8	TSB_CK1	Rhizosphere	1
+TSB_CK_6	0.84	TSB_CK1	Rhizosphere	1
+S.chromofuscus_1	1.16	S.chromofuscus	Rhizosphere	1
+S.chromofuscus_2	0.85	S.chromofuscus	Rhizosphere	1
+S.chromofuscus_3	0.83	S.chromofuscus	Rhizosphere	1
+S.chromofuscus_4	1.23	S.chromofuscus	Rhizosphere	1
+S.chromofuscus_5	0.89	S.chromofuscus	Rhizosphere	1
+S.chromofuscus_6	1.18	S.chromofuscus	Rhizosphere	1
+S. cyaneochromogenes_1	1.22	S. cyaneochromogenes	Rhizosphere	1
+S. cyaneochromogenes_2	1.09	S. cyaneochromogenes	Rhizosphere	1
+S. cyaneochromogenes_3	0.96	S. cyaneochromogenes	Rhizosphere	1
+S. cyaneochromogenes_4	0.88	S. cyaneochromogenes	Rhizosphere	1
+S. cyaneochromogenes_5	0.84	S. cyaneochromogenes	Rhizosphere	1
+S. cyaneochromogenes_6	0.78	S. cyaneochromogenes	Rhizosphere	1
+S. mayteni_1	1.3	S. mayteni	Rhizosphere	1
+S. mayteni_2	0.8	S. mayteni	Rhizosphere	1
+S. mayteni_3	1.23	S. mayteni	Rhizosphere	1
+S. mayteni_4	0.95	S. mayteni	Rhizosphere	1
+S. mayteni_5	1.19	S. mayteni	Rhizosphere	1
+S. mayteni_6	0.97	S. mayteni	Rhizosphere	1
+PDB_CK_1	0.86	PDB_CK	Rhizosphere	2
+PDB_CK_2	0.5	PDB_CK	Rhizosphere	2
+PDB_CK_3	0.93	PDB_CK	Rhizosphere	2
+PDB_CK_4	0.53	PDB_CK	Rhizosphere	2
+PDB_CK_5	0.56	PDB_CK	Rhizosphere	2
+PDB_CK_6	0.99	PDB_CK	Rhizosphere	2
+Paenibacillus alvei_1	0.18	Paenibacillus alvei	Rhizosphere	2
+Paenibacillus alvei_2	0.16	Paenibacillus alvei	Rhizosphere	2
+Paenibacillus alvei_3	0.52	Paenibacillus alvei	Rhizosphere	2
+Paenibacillus alvei_4	0.32	Paenibacillus alvei	Rhizosphere	2
+Paenibacillus alvei_5	0.25	Paenibacillus alvei	Rhizosphere	2
+Paenibacillus alvei_6	0.35	Paenibacillus alvei	Rhizosphere	2
+TSA_CK_1	0.9	TSA_CK	Rhizome	3
+TSA_CK_2	0.92	TSA_CK	Rhizome	3
+TSA_CK_3	0.65	TSA_CK	Rhizome	3
+TSA_CK_4	0.75	TSA_CK	Rhizome	3
+TSA_CK_5	0.8	TSA_CK	Rhizome	3
+TSA_CK_6	0.84	TSA_CK	Rhizome	3
+TSA_Re359_1	0.74	TSA_Re359	Rhizome	3
+TSA_Re359_2	1.13	TSA_Re359	Rhizome	3
+TSA_Re359_3	0.97	TSA_Re359	Rhizome	3
+TSA_Re359_4	1	TSA_Re359	Rhizome	3
+TSA_Re359_5	1.02	TSA_Re359	Rhizome	3
+TSA_Re359_6	0.71	TSA_Re359	Rhizome	3
+TSA_Re528_1	0.83	TSA_Re528	Rhizome	3
+TSA_Re528_2	1.13	TSA_Re528	Rhizome	3
+TSA_Re528_3	0.82	TSA_Re528	Rhizome	3
+TSA_Re528_4	0.83	TSA_Re528	Rhizome	3
+TSA_Re528_5	1.05	TSA_Re528	Rhizome	3
+TSA_Re528_6	1.21	TSA_Re528	Rhizome	3
+TSA_Re1030_1	1.08	TSA_Re1030	Rhizome	3
+TSA_Re1030_2	1.2	TSA_Re1030	Rhizome	3
+TSA_Re1030_3	1.17	TSA_Re1030	Rhizome	3
+TSA_Re1030_4	1.02	TSA_Re1030	Rhizome	3
+TSA_Re1030_5	1.3	TSA_Re1030	Rhizome	3
+TSA_Re1030_6	1.14	TSA_Re1030	Rhizome	3
+TSA_Sa564_1	0.81	TSA_Sa564	Rhizome	3
+TSA_Sa564_2	0.74	TSA_Sa564	Rhizome	3
+TSA_Sa564_3	1.2	TSA_Sa564	Rhizome	3
+TSA_Sa564_4	0.84	TSA_Sa564	Rhizome	3
+TSA_Sa564_5	1.26	TSA_Sa564	Rhizome	3
+TSA_Sa564_6	0.7	TSA_Sa564	Rhizome	3
+TSA_Sa789_1	1.07	TSA_Sa789	Rhizome	3
+TSA_Sa789_2	1.12	TSA_Sa789	Rhizome	3
+TSA_Sa789_3	0.92	TSA_Sa789	Rhizome	3
+TSA_Sa789_4	0.93	TSA_Sa789	Rhizome	3
+TSA_Sa789_5	1.58	TSA_Sa789	Rhizome	3
+TSA_Sa789_6	1.04	TSA_Sa789	Rhizome	3
+TTC_CK_1	0.79	TTC_CK	Rhizome	4
+TTC_CK_2	0.77	TTC_CK	Rhizome	4
+TTC_CK_3	0.46	TTC_CK	Rhizome	4
+TTC_CK_4	0.49	TTC_CK	Rhizome	4
+TTC_CK_5	0.79	TTC_CK	Rhizome	4
+TTC_Rs3041_1	1.07	TTC_Rs3041	Rhizome	4
+TTC_Rs3041_2	0.88	TTC_Rs3041	Rhizome	4
+TTC_Rs3041_3	1.04	TTC_Rs3041	Rhizome	4
+TTC_Rs3041_4	0.66	TTC_Rs3041	Rhizome	4
+TTC_Rs3041_5	0.98	TTC_Rs3041	Rhizome	4
+TTC_Rs3041_6	0.63	TTC_Rs3041	Rhizome	4
+TTC_Rs7061_1	0.98	TTC_Rs7061	Rhizome	4
+TTC_Rs7061_2	1	TTC_Rs7061	Rhizome	4
+TTC_Rs7061_3	0.63	TTC_Rs7061	Rhizome	4
+TTC_Rs7061_4	0.83	TTC_Rs7061	Rhizome	4
+TTC_Rs7061_5	0.96	TTC_Rs7061	Rhizome	4
+TTC_Rs7061_6	1.1	TTC_Rs7061	Rhizome	4
+YMA_CK_1	0.93	YMA_CK	Rhizome	5
+YMA_CK_2	0.75	YMA_CK	Rhizome	5
+YMA_CK_3	1.08	YMA_CK	Rhizome	5
+YMA_CK_4	0.84	YMA_CK	Rhizome	5
+YMA_CK_5	0.9	YMA_CK	Rhizome	5
+YMA_CK_6	0.88	YMA_CK	Rhizome	5
+YMA_By037_1	1.14	YMA_By037	Rhizome	5
+YMA_By037_2	0.98	YMA_By037	Rhizome	5
+YMA_By037_3	1.12	YMA_By037	Rhizome	5
+YMA_By037_4	1.2	YMA_By037	Rhizome	5
+YMA_By037_5	0.99	YMA_By037	Rhizome	5
+YMA_By037_6	1.17	YMA_By037	Rhizome	5
+YMA_By261_1	1.4	YMA_By261	Rhizome	5
+YMA_By261_2	1.27	YMA_By261	Rhizome	5
+YMA_By261_3	1.11	YMA_By261	Rhizome	5
+YMA_By261_4	1.22	YMA_By261	Rhizome	5
+YMA_By261_5	0.99	YMA_By261	Rhizome	5
+YMA_By261_6	1.45	YMA_By261	Rhizome	5
