@@ -1,6 +1,6 @@
 ########Fig3#########
-#Fig3A/C
-rawgen <- read.table("miejun_Fig3A.txt", header = TRUE, sep = "\t", check.names = FALSE)
+#Fig3A/C,将读取数据从raw_Fig3A.txt换成raw_Fig3C.txt即可
+rawgen <- read.table("raw_Fig3A.txt", header = TRUE, sep = "\t", check.names = FALSE)
 
 library(tidyverse)
 library(ggpubr)

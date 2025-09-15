@@ -392,7 +392,7 @@ library(ggrepel)
 library(pheatmap)
 library(RColorBrewer)
 
-picrust_data <- read.table("picrust2_EC_Fig2G.tsv",
+picrust_data <- read.table("Picrust2_EC_Fig2G.tsv",
                            sep = "\t", header = TRUE, check.names = FALSE, quote = "")
 metadata <- read.table("metadata.txt", header = TRUE, sep = "\t", stringsAsFactors = FALSE)
 

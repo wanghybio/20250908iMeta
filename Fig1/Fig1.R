@@ -5,7 +5,7 @@
 library(tidyverse)
 library(patchwork)
 # 1. 读取数据
-df <- read_csv("fengfig1B.csv")
+df <- read_csv("feng_Fig1B.csv")
 # 2. 转换为长格式
 df_long <- df %>%
   pivot_longer(cols = c(Hinesol, `β-Eudesmol`, Atractylon, Atractylodin),
